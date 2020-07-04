@@ -41,6 +41,8 @@
               <v-card-actions> <!-- 説明 3.13 -->
                 <v-btn flat color="red" v-on:click="togglePutModel(snippet.id)">Update</v-btn>
                 <v-btn flat color="gray" v-on:click="toggleDeleteModel(snippet.id)">Delete</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn flat color="red" v-on:click="goTop">Go Top</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -201,6 +203,9 @@
     },
     goElem: function(id) {
       document.getElementById(id).scrollIntoView(true)
+    },
+    goTop: function(){
+      document.getElementById("app").scrollIntoView(true)
     }
   }
 })

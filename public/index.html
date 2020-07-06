@@ -23,7 +23,7 @@
           <v-flex xs5> <!-- 説明 3.9 -->
             <div style="margin:10px">
               <h2>Select Language</h2>
-              <v-select v-model="language" :item="languages" label="Language" v-on="abstruct"></v-select>
+              <v-select v-model="language" :items="languages" label="Language" v-on:change="abstruct"></v-select>
               <h2>Snippets Shortcut</h2>
               <ul>
                 <li v-for="snippet in snippetList"><span id="name" v-on:click="goElem(snippet.id)">[{{ snippet.language }}] {{ snippet.title }}</span></li>
@@ -57,6 +57,7 @@
             <v-text-field v-model="postTitle" label="Snippet Title" required style="margin:20px; margin-top:30px"></v-text-field> <!-- 説明 3.19 -->
             <v-flex d-flex>
               <v-text-field v-model="postLanguage" label="Language" required style="margin:20px; margin-bottom:0px; margin-left:20px"></v-text-field>
+              <v-select v-model="postLanguage" :items="languagesForEdit" label="Select from history" style="margin:20px; margin-bottom:0px;margin-left: 0px"></v-select>
             </v-flex> <!-- 説明 3.19 -->
             <v-card-text>
               <p>Snippet</p>
@@ -137,8 +138,9 @@
           return {
             snippetList: ["", ""],
             allData: ["", ""],
-            languages: ['All'],
-            language: 'ALL',
+            languages: ["All"],
+            languagesForEdit: [],
+            language: "ALL",
             dialogPostFlag: false,
             postTitle: "",
             postLanguage: "",
@@ -167,10 +169,10 @@
     listLanguages: function() {
       this.languages = []
       this.languagesForEdit = []
-      this.languages.push("ALL")
-      for (i=0; i<this.allData.length; i ++) {
-        if (this.languages.indexOf(this.allData[i].language) == -1){
-          this.languages.push(this.allData[i].languages)
+      this.languages.push('ALL')
+      for (i=0;i<this.allData.length;i++) {
+        if (this.languages.indexOf(this.allData[i].language) == -1) { // 説明 4.3
+          this.languages.push(this.allData[i].language)
           this.languagesForEdit.push(this.allData[i].language)
         }
       }
@@ -225,18 +227,18 @@
       document.getElementById("app").scrollIntoView(true)
     },
     abstruct: function() {
-      if(this.language == "ALL"){
+      if (this.language == 'ALL') { // 説明 4.4
         this.snippetList = []
-        for (i=0; i<this.allData.length; i++){
-          this.snippetList.push(this.allData[i])
-        }
-      }else if (this.language != "") {
+        for (i=0;i<this.allData.length;i++) { // 説明 4.5
+          this.snippetList.push(this.allData[i]) // 説明 4.5
+        }   
+      } else if (this.language != '') { 
         this.snippetList = []
-        for (i=0; i<this.allData.length; i++){
-          if(this.allData[i].language == this.language) {
-            this.snippetList.push(this.allData[i])
+        for (i=0;i<this.allData.length;i++) { // 説明 4.5
+          if (this.allData[i].language == this.language) { // 説明 4.6
+            this.snippetList.push(this.allData[i]) // 説明 4.5
           }
-        }
+        }   
       }
     }
   }
